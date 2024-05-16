@@ -1,0 +1,18 @@
+{
+	"name": "landing_vehicle_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "smart_vehicle_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {}
+	}
+}

@@ -1,0 +1,50 @@
+{
+	"name": "vehicle_json_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "smart_vehicle_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filepath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Customer_Valid.json",
+				"folderPath": {
+					"value": "@dataset().filepath",
+					"type": "Expression"
+				},
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"VehicleID": {
+					"type": "string"
+				},
+				"latitiude": {
+					"type": "number"
+				},
+				"longitude": {
+					"type": "number"
+				},
+				"City": {
+					"type": "string"
+				},
+				"temeprature": {
+					"type": "integer"
+				},
+				"speed": {
+					"type": "integer"
+				}
+			}
+		}
+	}
+}
