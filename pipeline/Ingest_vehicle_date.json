@@ -52,7 +52,13 @@
 				"outputs": [
 					{
 						"referenceName": "landing_vehicle_DS",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filePath": {
+								"value": "@concat(formatDateTime(utcNow(),'yyyy'),'/',formatDateTime(utcNow(),'MM'),'/',formatDateTime(utcNow(),'dd'),'/')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}

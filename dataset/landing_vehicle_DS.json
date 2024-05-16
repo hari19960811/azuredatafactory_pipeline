@@ -5,11 +5,20 @@
 			"referenceName": "smart_vehicle_LS",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filePath": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().filePath",
+					"type": "Expression"
+				},
 				"fileSystem": "landing"
 			}
 		},
