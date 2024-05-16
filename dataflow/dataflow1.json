@@ -1,0 +1,165 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQL_DB_Customer_DS",
+						"type": "DatasetReference"
+					},
+					"name": "SQLDBSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "ADLS_CSV_Customer_DS",
+						"type": "DatasetReference"
+					},
+					"name": "CSVFile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ADLS_CSV2_Customer_DS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "ADLS_LS",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SQLDBSource",
+				"source(output(",
+				"          CustomerID as short,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CSVFile",
+				"CSVFile filter(CustomerID > 10) ~> filter1",
+				"filter1 derive(StartsWithFlag = startsWith(FirstName,'A')) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          CustomerID,",
+				"          NameStyle,",
+				"          Title,",
+				"          FirstName,",
+				"          MiddleName,",
+				"          LastName,",
+				"          Suffix,",
+				"          CompanyName,",
+				"          SalesPerson,",
+				"          EmailAddress,",
+				"          rowguid,",
+				"          ModifiedDate,",
+				"          StartsWithFlag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1, SQLDBSource join(select1@CustomerID == SQLDBSource@CustomerID,",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          CustomerID = select1@CustomerID,",
+				"          NameStyle = select1@NameStyle,",
+				"          Title = select1@Title,",
+				"          FirstName = select1@FirstName,",
+				"          MiddleName = select1@MiddleName,",
+				"          LastName = select1@LastName,",
+				"          Suffix = select1@Suffix,",
+				"          CompanyName = select1@CompanyName,",
+				"          SalesPerson = select1@SalesPerson,",
+				"          EmailAddress = select1@EmailAddress,",
+				"          rowguid = select1@rowguid,",
+				"          ModifiedDate = select1@ModifiedDate,",
+				"          StartsWithFlag,",
+				"          CustomerID = SQLDBSource@CustomerID,",
+				"          NameStyle = SQLDBSource@NameStyle,",
+				"          Title = SQLDBSource@Title,",
+				"          FirstName = SQLDBSource@FirstName,",
+				"          MiddleName = SQLDBSource@MiddleName,",
+				"          LastName = SQLDBSource@LastName,",
+				"          Suffix = SQLDBSource@Suffix,",
+				"          CompanyName = SQLDBSource@CompanyName,",
+				"          SalesPerson = SQLDBSource@SalesPerson,",
+				"          EmailAddress = SQLDBSource@EmailAddress,",
+				"          Phone,",
+				"          PasswordHash,",
+				"          PasswordSalt,",
+				"          rowguid = SQLDBSource@rowguid,",
+				"          ModifiedDate = SQLDBSource@ModifiedDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sort(asc(FirstName, false)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"name": "SQL_DB_HighWater_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQL_DB_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "HW_dt",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "HighWater"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

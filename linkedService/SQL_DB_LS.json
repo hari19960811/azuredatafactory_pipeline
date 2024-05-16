@@ -1,0 +1,20 @@
+{
+	"name": "SQL_DB_LS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "This is the linked service for SQL Database.",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=missionade100dbserver.database.windows.net;Initial Catalog=missionade100db;User ID=posuser",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "SQL-DB-Password"
+			}
+		}
+	}
+}

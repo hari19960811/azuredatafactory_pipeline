@@ -1,0 +1,14 @@
+{
+	"name": "azuredatafactoryhari1108",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6b0ddc55-d05a-4d1b-943b-b0136720d006",
+		"tenantId": "bdc3d6d3-2f68-49d2-b389-36dba0910b90"
+	}
+}
