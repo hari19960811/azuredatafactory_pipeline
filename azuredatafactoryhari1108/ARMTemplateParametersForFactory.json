@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "azuredatafactoryhari1108"
+		},
+		"ADLS_LS_accountKey": {
+			"value": ""
+		},
+		"SQL_DB_LS_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=missionade100dbserver.database.windows.net;Initial Catalog=missionade100db;User ID=posuser"
+		},
+		"Sftp_LS_password": {
+			"value": ""
+		},
+		"smart_vehicle_LS_accountKey": {
+			"value": ""
+		},
+		"ADLS_LS_properties_typeProperties_url": {
+			"value": "https://haridemo.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://hari1108.vault.azure.net/"
+		},
+		"Rest_LS_properties_typeProperties_url": {
+			"value": "https://restcountries.com/v3.1/all"
+		},
+		"Sftp_LS_properties_typeProperties_host": {
+			"value": "test.rebex.net"
+		},
+		"Sftp_LS_properties_typeProperties_userName": {
+			"value": "demo"
+		},
+		"smart_vehicle_LS_properties_typeProperties_url": {
+			"value": "https://smartvehicle.dfs.core.windows.net/"
+		}
+	}
+}
